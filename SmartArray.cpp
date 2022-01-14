@@ -93,6 +93,23 @@ class SmartArray
             
         }
     }
+    SmartArray& operator+(SmartArray& inArr) {
+        int newSize = this->size + inArr.getSize();
+        
+        int* tmpBuff = new int[newSize];
+
+        for (int i = 0; i < size; ++i) 
+            tmpBuff[i] = elem[i];    
+
+        for (int i = 0; i < inArr.getSize(); ++i) 
+            tmpBuff[i + size] = inArr[i];            
+        
+        delete[] elem;
+        elem = tmpBuff;        
+        size = newSize;
+        return *this;
+    }
+
     int getSize()
     {
         return size;
@@ -102,21 +119,20 @@ class SmartArray
 int main()
 {
     SmartArray smr(10);
-    SmartArray smr2(smr);
+    for (int i = 0; i < smr.getSize(); ++i)
+        smr[i] = i;
+    SmartArray smr2(10);
+    for (int i = 0; i < smr.getSize(); ++i)
+        smr2[i] = i;
 
-    
-    
-    smr[4] = 500;
-    smr2 = smr;
-
-    int a = smr[4];
-    std::cout << "a = " << a << std::endl;
-    std::cout << "Parents array " << std::endl;
     std::cout << smr;
-    std::cout << "Child array " << std::endl;
+    std::cout << std::endl;
     std::cout << smr2;
-    smr.push(10);
-    smr.push(20);   
+    std::cout << std::endl;
+
+    smr = smr2 + smr;
+    std::cout << "smr2 + smr: ";
+    std::cout << smr;
     
 }
     
